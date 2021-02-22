@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RADON</title>
+    <script>
+        function analyze(e){let n={};const l=e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[\r\n]+/gm,"").trim().split("");console.log("Analyzing "+l.length+" letters");for(let e=0;e<l.length;e++){const t=l[e];t in n?n[t]++:n[t]=1}return n}
+    </script>
+</head>
+<body>           
+    <header>
+        <h1 class="header">RADON</h1>
+        <p><a href="https://github.com/curesium/radon">Source Code on GitHub</a></p>
+    </header>
+
+    <div id="tool">
+        <textarea name="input" id="input" cols="30" rows="10"></textarea>
+        <button id="start">Analyze</button>
+        <div id="output">
+            <table id="print">
+                <tr>
+                    <th>Letter</th>
+                    <th>Frequency</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function print(e){const t=(e=>{const t=Object.keys(e),n=[];for(let r=0;r<t.length;r++)n.push({character:t[r],frequency:e[t[r]]});return n})(e);for(let e=0;e<t.length;e++){let n=t[e].character;const r=t[e].frequency;" "===n&&(n="space");const o="<tr><td>"+n+"</td><td>"+r+"</td></tr>";document.querySelector("#print").innerHTML+=o}}function sort(){var e,t,n,r,o,c,a;for(e=document.querySelector("#print"),n=!0;n;){for(n=!1,t=e.rows,r=1;r<t.length-1;r++)if(a=!1,o=t[r].getElementsByTagName("TD")[1],c=t[r+1].getElementsByTagName("TD")[1],Number(o.innerHTML)<Number(c.innerHTML)){a=!0;break}a&&(t[r].parentNode.insertBefore(t[r+1],t[r]),n=!0)}}function run(e,t){const n=Date.now();print(analyze(e)),!0===t&&plotData(analyze(e)),sort(),console.log("Finished in "+(Date.now()-n)+" miliseconds")}
+    </script>
+    <script>
+        function start(){const t=document.querySelector("#input").value;run(t)}document.querySelector("#start").addEventListener("click",start);
+    </script>
+</body>
+</html>
